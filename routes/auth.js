@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const authMiddleware = require("../middleware/auth");
 
 router.post("/register", authMiddleware(["admin"]), async (req, res) => {
@@ -28,7 +29,7 @@ router.post("/login", async (req,res) => {
         const validPass = await bcrypt.compare(password, user.password);
         if(!validPass) return res.status(401).json({message : "Wrong Password"});
 
-        const token = jwt.sign({id: user.id, role: user.role}, "fewhoufewuofebwo32b4ion32pndspjwe0rfhnw4io5n4oinfsdpibfwoib4o3b5gwgwrt3454324nb5jbsdj",
+        const token = jwt.sign({id: user.id, role: user.role}, process.env.JWT_SECRET,
     {expiresIn: "1h"});
 
     res.json({message: "Login successful", token});

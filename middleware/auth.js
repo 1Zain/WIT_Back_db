@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 
 const authMiddleware = (roles = []) => {
     return (req, res, next) => {
@@ -6,7 +8,7 @@ const authMiddleware = (roles = []) => {
         if (!token) return res.status(401).json({message: "No token provided"});
 
         try {
-            const decode = jwt.verify(token , "fewhoufewuofebwo32b4ion32pndspjwe0rfhnw4io5n4oinfsdpibfwoib4o3b5gwgwrt3454324nb5jbsdj");
+            const decode = jwt.verify(token ,process.env.JWT_SECRET );
             req.user = decode;
 
             if (roles.length && !roles.includes(req.user.role)) {
