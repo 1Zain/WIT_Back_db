@@ -62,7 +62,7 @@ jspm_packages/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+# .env
 
 # parcel-bundler cache
 .cache
@@ -104,3 +104,6 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Uploads folder - user uploaded files
+uploads/

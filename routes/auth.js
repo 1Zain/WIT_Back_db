@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const authMiddleware = require("../middleware/auth");
 
+// Register new user - admin only
 router.post("/register", authMiddleware(["admin"]), async (req, res) => {
     try {
         const {name, email,password, role} = req.body;
@@ -19,6 +20,7 @@ router.post("/register", authMiddleware(["admin"]), async (req, res) => {
     }
 })
 
+// Login user - public endpoint
 router.post("/login", async (req,res) => {
     try {
         const {email,password} = req.body;

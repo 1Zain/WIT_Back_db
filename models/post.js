@@ -29,6 +29,11 @@ const Post = sequelize.define("Post",
                 key: "id",
             },
         },
+        sharedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
 )
 
