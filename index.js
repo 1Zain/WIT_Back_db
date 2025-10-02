@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const sequelize = require("./config/database");
 const usersRoutes = require("./routes/users");
@@ -7,6 +8,12 @@ const postRoutes = require("./routes/posts");
 const path = require("path");
 const fs = require("fs");
 const User = require("./models/user");
+
+// CORS configuration
+app.use(cors({
+    origin: "http://localhost:5173", // Vite default port
+    credentials: true
+}));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
