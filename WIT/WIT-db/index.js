@@ -9,9 +9,9 @@ const path = require("path");
 const fs = require("fs");
 const User = require("./models/user");
 
-// CORS configuration
+// CORS configuration - Allow all origins
 app.use(cors({
-    origin: "http://localhost:5173", // Vite default port
+    origin: true, // Allow all origins
     credentials: true
 }));
 
@@ -22,9 +22,18 @@ app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/post", postRoutes);
 
+// Health check endpoint for Render.com
+app.get("/api/health", (req, res) => {
+    res.status(200).json({ 
+        status: "OK", 
+        message: "Server is running",
+        timestamp: new Date().toISOString()
+    });
+});
+
 
 // Function to reset database (uncomment the line below to enable)
-const RESET_DATABASE = true;
+// const RESET_DATABASE = true;
 
 // Function to create uploads directory
 function createUploadsFolder() {
@@ -88,8 +97,9 @@ sequelize.authenticate()
     // Create default admin after database sync
     await createDefaultAdmin();
     
-    app.listen(3000, () => {
-        console.log("🚀 Server is running on port 3000");
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`🚀 Server is running on port ${PORT}`);
     });
   })
   .catch(err => console.log("Error: " + err));
